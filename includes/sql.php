@@ -12,6 +12,13 @@ function find_all($table) {
    }
 }
 /*--------------------------------------------------------------*/
+/* Function for find all database table pengajuan dan detail pengajuan
+/*--------------------------------------------------------------*/
+function find_pengajuan($id) {
+  global $db;
+    return find_by_sql("SELECT * FROM `pengajuan` p,detail_pengajuan d WHERE p.id=d.id_pengajuan and p.`id` IN ($id)");
+}
+/*--------------------------------------------------------------*/
 /* Function for find all database table rows by table id_satker
 /*--------------------------------------------------------------*/
 function find_all_by_satker($table,$id) {

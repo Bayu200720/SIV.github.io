@@ -23,8 +23,7 @@ $sales = find_all_by_id('pengajuan',$_SESSION['user_id']);
             <span>All Pengajuan</span>
           </strong>
           <div class="pull-right">
-            <a href="add_pengajuan.php" class="btn btn-primary">Add pengajuan</a>
-            <a href="cetak.php" class="btn btn-primary">Cetak</a>
+            <a href="add_pengajuan.php" class="btn btn-primary">Add pengajuan</a>  
           </div>
         </div>
         <div class="panel-body">
@@ -32,9 +31,11 @@ $sales = find_all_by_id('pengajuan',$_SESSION['user_id']);
             <thead>
               <tr>
                 <th class="text-center" style="width: 50px;">#</th>
+                <th> checkbox </th>
                 <th> SPM </th>
                 <th class="text-center" style="width: 15%;"> Tanggal</th>
                 <th class="text-center" style="width: 15%;"> Jenis </th>
+                <th class="text-center" style="width: 15%;"> Pegawai yang Mengajukan </th>
                 <th class="text-center" style="width: 15%;"> Status Verifikasi </th>
                 <th class="text-center" style="width: 15%;"> Tanda Terima </th>  
                 <th class="text-center" style="width: 100px;"> Actions </th>
@@ -43,10 +44,13 @@ $sales = find_all_by_id('pengajuan',$_SESSION['user_id']);
            <tbody>
              <?php foreach ($sales as $sale):?>
              <tr>
-               <td class="text-center"><?php echo count_id();?></td>
+              <td class="text-center"><?php echo count_id();?></td>
+              <form action="cetak.php" method="POST">
+              <td><input type="checkbox" name="id[]" value="<?php echo $sale['id'];?>"></td>    
                <td><?php echo remove_junk($sale['SPM']); ?></td>
                <td class="text-center"><?php echo $sale['tanggal']; ?></td>
                <td class="text-center"><?php $jenis = find_by_id('jenis',$sale['id_jenis']); echo $jenis['keterangan'];  ?></td>
+               <td class="text-center"><?php  echo $sale['p_pengajuan'];  ?></td>
              <td class="text-center"><?php if($sale['status_verifikasi']==0){?><a href="update_verifikasi.php?id=<?=$sale['id']?>" class="btn btn-success">Proses</a><?php }else{?>
              <a href="batal_verifikasi.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a><?php } ?>
             </td>
@@ -72,6 +76,8 @@ $sales = find_all_by_id('pengajuan',$_SESSION['user_id']);
              <?php endforeach;?>
            </tbody>
          </table>
+         <input type="submit" name="submit" value="cetak multiple" class="btn btn-primary">
+         </form>
         </div>
       </div>
     </div>
