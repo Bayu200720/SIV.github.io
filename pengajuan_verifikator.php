@@ -24,6 +24,7 @@ $sales = find_all_by_id('pengajuan',$_SESSION['user_id']);
           </strong>
           <div class="pull-right">
             <a href="add_pengajuan.php" class="btn btn-primary">Add pengajuan</a>
+            <a href="cetak.php" class="btn btn-primary">Cetak</a>
           </div>
         </div>
         <div class="panel-body">
