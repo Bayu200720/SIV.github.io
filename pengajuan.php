@@ -51,19 +51,27 @@ $sales = find_all('pengajuan');
                <td class="text-center"><?php echo $sale['tanggal']; ?></td>
                <td class="text-center"><?php $jenis = find_by_id('jenis',$sale['id_jenis']); echo $jenis['keterangan'];  ?></td>
              <td class="text-center"><?php if($sale['status_verifikasi']==0){?><a href="update_verifikasi.php?id=<?=$sale['id']?>" class="btn btn-success">Proses</a><?php }else{?>
-             <a href="batal_verifikasi.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a><?php } ?>
+             <a href="batal_verifikasi.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal
+              [<?php $user = find_by_id('users',(int)$sale['status_verifikasi']);echo $user['name'];?>]
+             </a><?php } ?>
             </td>
             
             <td class="text-center"><?php if($sale['status_spm']==0){?><a href="update_spm.php?id=<?=$sale['id']?>" class="btn btn-success">Proses</a><?php }else{?>
-             <a href="batal_spm.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a><?php } ?>
+             <a href="batal_spm.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal
+             [<?php $user = find_by_id('users',(int)$sale['status_spm']);echo $user['name'];?>]
+             </a><?php } ?>
             </td>
 
             <td class="text-center"><?php if($sale['status_kppn']==0){?><a href="update_kppn.php?id=<?=$sale['id']?>" class="btn btn-success">Proses</a><?php }else{?>
-             <a href="batal_kppn.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a><?php } ?>
+             <a href="batal_kppn.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal
+             [<?php $user = find_by_id('users',(int)$sale['status_kppn']);echo $user['name'];?>]
+             </a><?php } ?>
             </td>
 
             <td class="text-center"><?php if($sale['status_sp2d']==0){?><a href="update_sp2d.php?id=<?=$sale['id']?>" class="btn btn-success">Proses</a><?php }else{?>
-             <a href="batal_sp2d.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a><?php } ?>
+             <a href="batal_sp2d.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal
+             [<?php $user = find_by_id('users',(int)$sale['status_sp2d']);echo $user['name'];?>]
+             </a><?php } ?>
             </td>
 
             <td class="text-center"><?php if($sale['upload']=='0'){?><a href="media.php?id=<?=$sale['id']?>" class="btn btn-primary">Upload</a><?php }else{?>

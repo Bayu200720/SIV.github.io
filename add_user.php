@@ -4,23 +4,25 @@
   // Checkin What level user has permission to view this page
   page_require_level(1);
   $groups = find_all('user_groups');
+  $satker = find_all('satker');
 ?>
 <?php
   if(isset($_POST['add_user'])){
 
-   $req_fields = array('full-name','username','password','level' );
+   $req_fields = array('full-name','username','password','level','id_satker' );
    validate_fields($req_fields);
 
    if(empty($errors)){
            $name   = remove_junk($db->escape($_POST['full-name']));
        $username   = remove_junk($db->escape($_POST['username']));
        $password   = remove_junk($db->escape($_POST['password']));
+       $id_satker  = remove_junk($db->escape($_POST['id_satker']));
        $user_level = (int)$db->escape($_POST['level']);
        $password = sha1($password);
         $query = "INSERT INTO users (";
-        $query .="name,username,password,user_level,status";
+        $query .="name,username,password,user_level,status,id_satker";
         $query .=") VALUES (";
-        $query .=" '{$name}', '{$username}', '{$password}', '{$user_level}','1'";
+        $query .=" '{$name}', '{$username}', '{$password}', '{$user_level}','1','{$id_satker}'";
         $query .=")";
         if($db->query($query)){
           //sucess
@@ -67,6 +69,14 @@
                 <select class="form-control" name="level">
                   <?php foreach ($groups as $group ):?>
                    <option value="<?php echo $group['group_level'];?>"><?php echo ucwords($group['group_name']);?></option>
+                <?php endforeach;?>
+                </select>
+            </div>
+            <div class="form-group">
+              <label for="level">Satker</label>
+                <select class="form-control" name="id_satker">
+                  <?php foreach ($satker as $satker ):?>
+                   <option value="<?php echo $satker['id'];?>"><?php echo ucwords($satker['keterangan']);?></option>
                 <?php endforeach;?>
                 </select>
             </div>

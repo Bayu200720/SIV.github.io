@@ -7,6 +7,7 @@
 <?php
   $e_user = find_by_id('users',(int)$_GET['id']);
   $groups  = find_all('user_groups');
+  $satkers = find_all('satker');
   if(!$e_user){
     $session->msg("d","Missing user id.");
     redirect('users.php');
@@ -16,15 +17,16 @@
 <?php
 //Update User basic info
   if(isset($_POST['update'])) {
-    $req_fields = array('name','username','level');
+    $req_fields = array('name','username','level','id_satker');
     validate_fields($req_fields);
     if(empty($errors)){
              $id = (int)$e_user['id'];
            $name = remove_junk($db->escape($_POST['name']));
+           $id_satker = remove_junk($db->escape($_POST['id_satker']));
        $username = remove_junk($db->escape($_POST['username']));
           $level = (int)$db->escape($_POST['level']);
        $status   = remove_junk($db->escape($_POST['status']));
-            $sql = "UPDATE users SET name ='{$name}', username ='{$username}',user_level='{$level}',status='{$status}' WHERE id='{$db->escape($id)}'";
+            $sql = "UPDATE users SET name ='{$name}', username ='{$username}',user_level='{$level}',status='{$status}',id_satker='{$id_satker}' WHERE id='{$db->escape($id)}'";
          $result = $db->query($sql);
           if($result && $db->affected_rows() === 1){
             $session->msg('s',"Acount Updated ");
@@ -90,6 +92,14 @@ if(isset($_POST['update-pass'])) {
                 <select class="form-control" name="level">
                   <?php foreach ($groups as $group ):?>
                    <option <?php if($group['group_level'] === $e_user['user_level']) echo 'selected="selected"';?> value="<?php echo $group['group_level'];?>"><?php echo ucwords($group['group_name']);?></option>
+                <?php endforeach;?>
+                </select>
+            </div>
+            <div class="form-group">
+              <label for="level">Satker</label>
+                <select class="form-control" name="id_satker">
+                  <?php foreach ($satkers as $satker ):?>
+                   <option <?php if($satker['id'] === $e_user['id_satker']) echo 'selected="selected"';?> value="<?php echo $satker['id'];?>"><?php echo ucwords($satker['keterangan']);?></option>
                 <?php endforeach;?>
                 </select>
             </div>

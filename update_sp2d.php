@@ -15,7 +15,7 @@
       }
   }
   $query  = "UPDATE pengajuan SET ";
-        $query .= "status_sp2d='1'";
+        $query .= "status_sp2d='".$_SESSION['user_id']."'";
         $query .= "WHERE id='{$pengajuan["id"]}'";
         $result = $db->query($query);
         //echo $query;

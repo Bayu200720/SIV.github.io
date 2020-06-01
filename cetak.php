@@ -31,47 +31,30 @@ $page_title = 'Report';
 <body>
   <br>
 	
-<p align="center">&nbsp;</p>
-<p align="center">&nbsp;</p>
-<p align="center">&nbsp;</p>
-<p align="center">&nbsp;</p>
-<p align="center"><strong>TANDA TERIMA </strong></p>
+<img src="uploads/users/kopses1.jpg" hight="100%" width="100%">
+<p align="center"><strong>TANDA TERIMA PENGAJUAN SPM</strong></p>
 <table width="100%" cellpadding="0" cellspacing="0" >
   <tr>
-    <td width="173" valign="top"> Kepada Yth </td>
+    <td width="173" valign="top"> Kode Satker </td>
     <td width="24" valign="top"> : </td>
-    <td width="743" valign="top"> Kuasa Pengguna Anggaran Badan Litbang SDM</td>
+    <td width="743" valign="top"> 664297</td>
   </tr>
   <tr>
-    <td width="173" valign="top">Dari</td>
+    <td width="173" valign="top">Nama Satker</td>
     <td width="24" valign="top"> : </td>
-    <td width="743" valign="top"> Pejabat Pembuat Komitmen Puslitbang Aptika IKP </td>
+    <td width="743" valign="top"> <?php $u = find_all_global('satker',$results[0]['id_satker'],'id'); echo $u[0]['keterangan'];?> </td>
   </tr>
   <tr>
-    <td width="173" valign="top">Lampiran </td>
+    <td width="173" valign="top">Tangal Pengajuan Dokumen </td>
     <td width="24" valign="top"> : </td>
-    <td width="743" valign="top"> 1 (satu) berkas </td>
+    <td width="743" valign="top"> <?=$results[0]['tanggal'];?> </td>
   </tr>
-  <tr>
-    <td width="173" valign="top"> Perihal </td>
-    <td width="24" valign="top"> : </td>
-    <td width="743" valign="top"> Usulan SPP- LS </td>
-  </tr>
-  <tr>
-    <td width="173" valign="top"> Tanggal </td>
-    <td width="24" valign="top"> : </td>
-    <td width="743" valign="top"><?php echo $today = date('j-m-y' ); ?> </td>
-  </tr>
-  <tr>
-    <td width="173" valign="top"> Sifat </td>
-    <td width="24" valign="top"> :</td>
-    <td width="743" valign="top"> Segera </td>
-  </tr>
+  
   <tr>
     <td colspan="3" valign="top"><hr></td>
   </tr>
   <tr>
-    <td colspan="3" valign="top">Dalam rangka pelaksanaan kegiatan Puslitbang Aptika dan IKP, bersama ini di sampaikan pengajuan SPP LS sebagai berikut : </td>
+    <td colspan="3" valign="top"></td>
   </tr>
   <tr>
     <td colspan="3" valign="top">&nbsp;</td>
@@ -119,7 +102,7 @@ $page_title = 'Report';
     <td valign="top">&nbsp;</td>
   </tr>
   <tr>
-    <td colspan="3" valign="top">Demikian disampaikan, atas perhatian dan kerjasamanya diucapkan terimakasih </td>
+    <td colspan="3" valign="top"> </td>
   </tr>
   <tr>
     <td valign="top">&nbsp;</td>
@@ -133,8 +116,8 @@ $page_title = 'Report';
       </tr>
       <tr>
         <td width="14" class="style24">&nbsp; </td>
-        <td width="329" valign="top" class="style24"><p>Mengetahui<br>
-          Verifikator</p>
+        <td width="329" valign="top" class="style24"><p>Petugas<br>
+          Verifikasi</p>
           <p><br>
             <br>
             <br>
@@ -142,8 +125,8 @@ $page_title = 'Report';
             </strong>NIP. <?php echo $user[0]['nip'];?> </p>
           </td>
         <td width="188" valign="top" class="style24">&nbsp;</td>
-        <td width="330" valign="top" class="style24"><p>Pegawai <br>
-          yang Melakukan Pengajuan </p>
+        <td width="330" valign="top" class="style24"><p>Petugas <br>
+          Satker </p>
             <p> <br>
               <br>
               <br>
@@ -155,13 +138,13 @@ $page_title = 'Report';
       </tr>
       <tr>
         <td class="style24">&nbsp;</td>
-        <td class="style24"><strong>Tembusan Yth: </strong></td>
+        <td class="style24"><strong> </strong></td>
         <td class="style24">&nbsp;</td>
         <td class="style24">&nbsp;</td>
       </tr>
       <tr>
         <td height="54" class="style24">&nbsp;</td>
-        <td class="style24">Kepala Bagian Keuangan Badan Litbang SDM </td>
+        <td class="style24"></td>
         <td class="style24">&nbsp;</td>
         <td class="style24">&nbsp;</td>
       </tr>

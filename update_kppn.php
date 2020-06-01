@@ -15,7 +15,7 @@
       }
   }
   $query  = "UPDATE pengajuan SET ";
-        $query .= "status_kppn='1'";
+        $query .= "status_kppn='".$_SESSION['user_id']."'";
         $query .= "WHERE id='{$pengajuan["id"]}'";
         $result = $db->query($query);
         //echo $query;

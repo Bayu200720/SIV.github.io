@@ -1,3 +1,11 @@
+$(document).on('click','#editsp2d',function(){
+    var id=$(this).data('id');
+    var sp2d=$(this).data('sp2d');
+        
+    $('.modal-body #id').val(id);
+    $('.modal-body #sp2d').val(sp2d);
+  })
+
 
 function suggetion() {
 

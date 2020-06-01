@@ -51,23 +51,23 @@ $sales = find_all_by_satker('pengajuan',$user['id_satker']);
                <td><?php echo remove_junk($sale['SPM']); ?></td>
                <td class="text-center"><?php echo $sale['tanggal']; ?></td>
                <td class="text-center"><?php $jenis = find_by_id('jenis',$sale['id_jenis']); echo $jenis['keterangan'];  ?></td>
-             <td class="text-center"><?php if($sale['status_verifikasi']==0){?><span class="btn btn-success">Belom di Proses</span><?php }else{?>
-             <span class="btn btn-success">Sudah di Proses</span><?php } ?>
+             <td class="text-center"><?php if($sale['status_verifikasi']==0){?><span class="label label-danger">Belom di Proses</span><?php }else{?>
+             <span class="label label-success">Sudah di Proses oleh <?php $user = find_by_id('users',(int)$sale['status_verifikasi']);echo $user['name'];?></span><?php } ?>
             </td>
             
-            <td class="text-center"><?php if($sale['status_spm']==0){?><span class="btn btn-success">Belom di Proses</span><?php }else{?>
-             <span class="btn btn-success">Sudah di Proses</span><?php } ?>
+            <td class="text-center"><?php if($sale['status_spm']==0){?><span class="label label-danger">Belom di Proses</span><?php }else{?>
+             <span class="label label-success">Sudah di Proses oleh <?php $user = find_by_id('users',(int)$sale['status_spm']);echo $user['name'];?></span><?php } ?>
             </td>
 
-            <td class="text-center"><?php if($sale['status_kppn']==0){?><span class="btn btn-success">Belom di Proses</span><?php }else{?>
-             <span class="btn btn-success">Sudah di Proses</span><?php } ?>
+            <td class="text-center"><?php if($sale['status_kppn']==0){?><span class="label label-danger">Belom di Proses</span><?php }else{?>
+             <span class="label label-success">Sudah di Proses oleh <?php $user = find_by_id('users',(int)$sale['status_kppn']);echo $user['name'];?></span><?php } ?>
             </td>
 
-            <td class="text-center"><?php if($sale['status_sp2d']==0){?><span class="btn btn-success">Belom Cair</span><?php }else{?>
-             <span class="btn btn-success">Sudah Cair</span><?php } ?>
+            <td class="text-center"><?php if($sale['status_sp2d']==0){?><span class="label label-danger">Belom Cair</span><?php }else{?>
+             <span class="label label-success">Sudah Cair [<?php $user = find_by_id('users',(int)$sale['status_sp2d']);echo $user['name'];?>]</span><?php } ?>
             </td>
 
-            <td class="text-center"><?php if($sale['upload']=='0'){?><span class="btn btn-danger">SP2D Belom di upload</span><?php }else{?>
+            <td class="text-center"><?php if($sale['upload']=='0'){?><span class="label label-danger">SP2D Belom di upload</span><?php }else{?>
              <a href="uploads/products/<?=$sale['upload']?>" class="btn btn-success" target="_blank">Preview</a>
              <?php } ?>
             </td>

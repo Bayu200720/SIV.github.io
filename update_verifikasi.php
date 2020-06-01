@@ -16,7 +16,7 @@
     }
   }
   $query  = "UPDATE pengajuan SET ";
-        $query .= "status_verifikasi='1'";
+        $query .= "status_verifikasi='".$_SESSION['user_id']."'";
         $query .= "WHERE id='{$pengajuan["id"]}'";
         $result = $db->query($query);
         $session->msg('s',' Berhasil di Proses');

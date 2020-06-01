@@ -334,10 +334,11 @@ function tableExists($table){
   /*--------------------------------------------------------------*/
  function find_recent_product_added($limit){
    global $db;
-   $sql   = " SELECT p.id,p.name,p.sale_price,p.media_id,c.name AS categorie,";
-   $sql  .= "m.file_name AS image FROM products p";
-   $sql  .= " LEFT JOIN categories c ON c.id = p.categorie_id";
-   $sql  .= " LEFT JOIN media m ON m.id = p.media_id";
+   $sql   = " SELECT m.keterangan,sum(c.nominal) AS total";
+   $sql  .= " FROM pengajuan p";
+   $sql  .= " LEFT JOIN detail_pengajuan c ON c.id_pengajuan = p.id";
+   $sql  .= " LEFT JOIN satker m ON m.id = p.id_satker";
+   $sql  .= " GROUP by p.id_satker";
    $sql  .= " ORDER BY p.id DESC LIMIT ".$db->escape((int)$limit);
    return find_by_sql($sql);
  }
@@ -346,11 +347,11 @@ function tableExists($table){
  /*--------------------------------------------------------------*/
  function find_higest_saleing_product($limit){
    global $db;
-   $sql  = "SELECT p.name, COUNT(s.product_id) AS totalSold, SUM(s.qty) AS totalQty";
-   $sql .= " FROM sales s";
-   $sql .= " LEFT JOIN products p ON p.id = s.product_id ";
-   $sql .= " GROUP BY s.product_id";
-   $sql .= " ORDER BY SUM(s.qty) DESC LIMIT ".$db->escape((int)$limit);
+   $sql  = "SELECT s.keterangan, COUNT(p.id) AS totalSold";
+   $sql .= " FROM pengajuan p";
+   $sql .= " LEFT JOIN satker s ON p.id_satker = s.id ";
+   $sql .= " GROUP BY p.id_satker";
+   $sql .= " ORDER BY SUM(p.id_satker) DESC LIMIT ".$db->escape((int)$limit);
    return $db->query($sql);
  }
  /*--------------------------------------------------------------*/
@@ -379,14 +380,15 @@ function tableExists($table){
    return find_by_sql($sql);
  }
  /*--------------------------------------------------------------*/
- /* Function for Display Recent sale
+ /* Function for Display SPM yang belom cair
  /*--------------------------------------------------------------*/
-function find_recent_sale_added($limit){
+function find_recent_sale_added(){
   global $db;
-  $sql  = "SELECT s.id,s.qty,s.price,s.date,p.name";
-  $sql .= " FROM sales s";
-  $sql .= " LEFT JOIN products p ON s.product_id = p.id";
-  $sql .= " ORDER BY s.date DESC LIMIT ".$db->escape((int)$limit);
+  $sql  = "SELECT s.keterangan,count(p.id) as 'jumlah_SPM'";
+  $sql .= " FROM pengajuan p";
+  $sql .= " LEFT JOIN satker s ON s.id = p.id_satker WHERE status_sp2d=0";
+  $sql .= " GROUP BY p.id_satker";
+  $sql .= " ORDER BY p.id_satker DESC";
   return find_by_sql($sql);
 }
 /*--------------------------------------------------------------*/
