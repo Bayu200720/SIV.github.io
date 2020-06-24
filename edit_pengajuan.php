@@ -2,7 +2,7 @@
   $page_title = 'Edit Pengajuan';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-  page_require_level(2);
+  page_require_level(6);
   $all_categories = find_all('jenis');
   $satker = find_all('satker');
   $pengajuan = find_by_id('pengajuan',$_GET['id']);
@@ -10,7 +10,7 @@
 ?>
 <?php
  if(isset($_POST['update_pengajuan'])){
-   $req_fields = array('spm','id_jenis','tanggal','id_satker','p_pengajuan');
+   $req_fields = array('spm','id_jenis_pengajuan');
    validate_fields($req_fields);
    if(empty($errors)){
      $spm  = remove_junk($db->escape($_POST['spm']));
@@ -19,23 +19,24 @@
      $id_satker = remove_junk($db->escape($_POST['id_satker']));
      $p_pengajuan = remove_junk($db->escape($_POST['p_pengajuan']));
      $user_id   = remove_junk($db->escape($_SESSION['user_id']));
+     $id_jenis_pengajuan = remove_junk($db->escape($_POST['id_jenis_pengajuan']));
      $date    = make_date();
      $query  = "UPDATE pengajuan SET";
-     $query .=" tanggal ='{$tanggal}',SPM='{$spm}',id_jenis='{$id_jenis}',id_satker='{$id_satker}',p_pengajuan='{$p_pengajuan}'";
+     $query .=" SPM='{$spm}',id_jenis_pengajuan='{$id_jenis_pengajuan}'";
      $query .= " WHERE id ='{$_GET['id']}'";
      if($db->query($query)){
        $session->msg('s',"Pengajuan berhasil di edit ");
        if($user['user_level']==2){
-        redirect('pengajuan_verifikator.php', false);
+        redirect('pengajuan_bpp.php?id='.$pengajuan['id_nodin'], false);
       }else{
-       redirect('pengajuan.php', false);
+       redirect('pengajuan_bpp.php?id='.$pengajuan['id_nodin'], false);
       }
      } else {
        $session->msg('d',' Sorry failed to edit!');
           if($user['user_level']==2){
               redirect('pengajuan_verifikator.php', false);
           }else{
-       redirect('pengajuan.php', false);
+            redirect('pengajuan.php?id='.$_GET['id'], false);
           }
     }
 
@@ -80,43 +81,17 @@
 
               <div class="form-group">
                 <div class="input-group">
-                  <select class="form-control" name="id_jenis">
+                <span class="input-group-addon">
+                   <i class="glyphicon glyphicon-th-large"></i>
+                  Jenis Pegajuan</span>
+                  <select class="form-control" name="id_jenis_pengajuan">
                       <option value="">Pilih Jenis Pengajuan</option>
-                    <?php  foreach ($all_categories as $cat): ?>
-                      <option value="<?php echo (int)$cat['id'] ?>">
-                        <?php echo $cat['keterangan'] ?></option>
+                      <?php $jenis = find_all('jenis_pengajuan');?>
+                    <?php  foreach ($jenis as $j): ?>
+                      <option value="<?php echo (int)$j['id'] ?>">
+                        <?php echo $j['keterangan'] ?></option>
                     <?php endforeach; ?>
-                    </select>
-               </div>
-              </div>
-
-              <div class="form-group">
-                <div class="input-group">
-                  <select class="form-control" name="id_satker">
-                      <option value="">Pilih Satker</option>
-                    <?php  foreach ($satker as $sat): ?>
-                      <option value="<?php echo (int)$sat['id'] ?>">
-                        <?php echo $sat['keterangan'] ?></option>
-                    <?php endforeach; ?>
-                    </select>
-               </div>
-              </div>
-
-              <div class="form-group">
-                <div class="input-group">
-                  <span class="input-group-addon">
-                   <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
-                  <input type="text" class="form-control" name="p_pengajuan" placeholder="" value="<?=$pengajuan['p_pengajuan'];?>">
-               </div>
-              </div>
-
-              <div class="form-group">
-                <div class="input-group">
-                  <span class="input-group-addon">
-                   <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
-                  <input type="date" class="form-control" name="tanggal" placeholder="Tanggal" value="<?=$pengajuan['tanggal'];?>">
+                </select>
                </div>
               </div>
 

@@ -18,7 +18,9 @@
         $query .= "status_sp2d='0'";
         $query .= "WHERE id='{$pengajuan["id"]}'";
         $result = $db->query($query);
-        
+        $pencairan= find_all_global('pencairan',$pengajuan['id'],'id_pengajuan');
+        //var_dump($pencairan);exit();
+        $delete_id = delete_by_id('pencairan',$pencairan[0]['id']);
         $session->msg('s',' Berhasil di Batalkan');
             if($user['user_level']==5){
            redirect('pengajuan_ben.php', false);

@@ -2,10 +2,12 @@
   $page_title = 'All Detail Pengajuan';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-   page_require_level(3);
+   page_require_level(6);
 ?>
 <?php
 $sales = find_detail($_GET['id']);
+$sales1 = find_all_global('pengajuan',$_GET['id'],'id');
+//var_dump($sales1);exit();
 ?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
@@ -23,6 +25,11 @@ $sales = find_detail($_GET['id']);
           </strong>
           <div class="pull-right">
             <a href="add_detail_pengajuan.php?id=<?=$_GET['id'];?>" class="btn btn-primary">Add Detail Pengajuan</a>
+            <?php $user=find_by_id('user',$_SESSION['user_id']);  if( $user['user_level']== '6'){?>
+            <a href="pengajuan_bpp.php?id=<?=$sales1[0]['id_nodin'];?>" class="btn btn-warning">Back</a>
+            <?php }else{ ?>
+              <a href="pengajuan_v.php?id=<?=$sales1[0]['id_nodin'];?>" class="btn btn-warning">Back</a>
+            <?php } ?>
           </div>
         </div>
         <div class="panel-body">
@@ -49,7 +56,7 @@ $sales = find_detail($_GET['id']);
              <tr>
                <td class="text-center"><?php echo count_id();?></td>
                <td class="text-center"><?php echo $sale['no_sptjb']; ?></td>
-               <td class="text-center"><?php echo $sale['akun']; ?></td>
+               <td class="text-center"><?php $akun= find_by_id('akun',$sale['id_akun']); echo $akun['mak'] ; ?></td>
                <td class="text-center"><?php echo $sale['nominal']; ?></td>
                <td class="text-center"><?php echo $sale['pph']; ?></td>
                <td class="text-center"><?php echo $sale['ppn']; ?></td>

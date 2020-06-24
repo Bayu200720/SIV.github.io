@@ -6,6 +6,29 @@
 ?>
 <?php
 
+if($_GET['status']==='deleteKc'){
+    //var_dump($_GET);exit();
+    $update ="UPDATE `pencairan` SET `status` = '0' WHERE `pencairan`.`status` = {$_GET['id']}";
+    $db->query($update);
+    $delete_id = delete_by_id('k_cair',(int)$_GET['id']);
+  if($delete_id){
+      $session->msg("s","Tanda Terima Pencairan deleted.");
+      if($user['user_level']==2){
+              redirect('cetakP.php', false);
+          }else{
+      redirect('cetakP.php');
+        }
+  } else {
+      $session->msg("d","Tanda Terima Pencairan deletion failed.");
+          if($user['user_level']==2){
+              redirect('cetakP.php', false);
+          }else{
+      redirect('cetakP.php');
+          }
+  }
+
+}
+
 if(isset($_POST['update_sp2d'])){
   $req_fields = array('sp2d', 'id' );
   validate_fields($req_fields);
@@ -31,7 +54,7 @@ if(isset($_POST['update_sp2d'])){
       }
 }
 
-$sales = find_all('pengajuan');
+$sales = find_all('k_cair');
 
 ?>
 <?php include_once('layouts/header.php'); ?>
@@ -46,7 +69,7 @@ $sales = find_all('pengajuan');
         <div class="panel-heading clearfix">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>All Pengajuan</span>
+            <span>All Cetak Pencairan</span>
           </strong>
           <div class="pull-right">
           
@@ -57,43 +80,25 @@ $sales = find_all('pengajuan');
             <thead>
               <tr>
                 <th class="text-center" style="width: 50px;">#</th>
-                <th> SPM </th>
-                <th class="text-center" style="width: 15%;"> Tanggal</th>
-                <th class="text-center" style="width: 15%;"> Jenis </th>          
-                <th class="text-center" style="width: 15%;"> Status SP2D </th>
-                <th class="text-center" style="width: 15%;"> Tanda Terima Pencairan </th>
-                <th class="text-center" style="width: 15%;"> Upload </th>
-                <th class="text-center" style="width: 100px;"> Input SP2D </th>
+                <th class="text-center" style="width: 15%;"> Waktu</th>
+                <th class="text-center" style="width: 15%;"> Total</th>
+                <th class="text-center" style="width: 100px;"> Cetak</th>
              </tr>
             </thead>
            <tbody>
              <?php foreach ($sales as $sale):?>
              <tr>
                <td class="text-center"><?php echo count_id();?></td>
-               <td><?php echo remove_junk($sale['SPM']); ?></td>
-               <td class="text-center"><?php $nodin= find_by_id('nodin',$sale['id_nodin']);echo $nodin['tanggal']; ?></td>
-               <td class="text-center"><?php $nodin= find_by_id('nodin',$sale['id_nodin']); $jenis = find_by_id('jenis',$nodin['id_jenis']); echo $jenis['keterangan'];?></td>
-     
-
-            <td class="text-center">
-            <?php if($sale['status_kppn']==0){ ?>
-              <span class="label label-danger">belom di validasi oleh petugas pengirim SPM ke KPPN</span>
-             <?php }else{ ?>
-            <?php if($sale['status_sp2d']==0){?><a href="update_sp2d.php?id=<?=$sale['id']?>" class="btn btn-success">Proses</a><?php }else{?>
-             <a href="batal_sp2d.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a><?php } ?>
-            <?php } ?>
-            </td>
-            <td class="text-center"><a href="cetak_TandaTerima.php" class="btn btn-warning">Cetak</a></td>
-            <td class="text-center"><?php if($sale['upload']=='0'){?><a href="media.php?id=<?=$sale['id']?>" class="btn btn-primary">Upload</a><?php }else{?>
-             <a href="uploads/products/<?=$sale['upload']?>" class="btn btn-success" target="_blank">Preview</a>
-             <a href="batal_upload.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a>
-             <?php } ?>
-            </td>
-            <td><?php if($sale['sp2d'] == ''){?><a href="#" class="btn btn-primary" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>'>Input SP2D</a><?php }else{?>
-              <a href="#" class="btn btn-warning" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>' data-sp2d='<?=$sale['sp2d'];?>'><?=$sale['sp2d'];?></a> <?php } ?>
-             
-            </td>
-                
+               <td class="text-center"><?php echo $sale['time_add'];?></td>
+               <td class="text-center"><?php $t=sumStatus($sale['id']); echo rupiah($t['jum']);?></td>
+               <td class="text-center">
+                     <a href="cetaktt1.php?id=<?=$sale['id'];?>"  class="btn btn-primary btn-xs"  title="Cetak" title="Cetak" data-toggle="tooltip">
+                       Cetak
+                     </a>
+                     <a onclick="return confirm('Yakin Hapus?')" href="cetakP.php?id=<?php echo (int)$sale['id'];?>&status=deleteKc" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
+                       <span class="glyphicon glyphicon-trash"></span>
+                     </a>
+               </td> 
              </tr>
             <?php endforeach;?>
            </tbody>

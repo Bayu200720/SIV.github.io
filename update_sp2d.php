@@ -18,7 +18,12 @@
         $query .= "status_sp2d='".$_SESSION['user_id']."'";
         $query .= "WHERE id='{$pengajuan["id"]}'";
         $result = $db->query($query);
-        //echo $query;
+        
+      $data = find_Tpengajuan($pengajuan['id']);
+//      var_dump($data);exit();
+      $insert ="INSERT INTO pencairan(id_pengajuan,nominal,keterangan,tanggal,id_satker,spm)VALUES({$pengajuan['id']},{$data['jum']},'Pengajuan','{$data['tanggal']}',{$data['id_satker']},{$data['SPM']})";
+      $db->query($insert);
+
         $session->msg('s',' Berhasil di Proses');
             if($user['user_level']==5){
            redirect('pengajuan_ben.php', false);

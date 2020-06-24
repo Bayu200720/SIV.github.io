@@ -2,7 +2,7 @@
   $page_title = 'edit Detail Pengajuan';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-  page_require_level(2);
+  page_require_level(6);
   
   $detail = find_by_id('detail_pengajuan',(int)$_GET['id']);
   if(!$detail){
@@ -13,19 +13,19 @@
 ?>
 <?php
  if(isset($_POST['edit_detail_pengajuan'])){
-   $req_fields = array('no_sptjb','nominal','pph','ppn','akun','keterangan');
+   $req_fields = array('no_sptjb','nominal','pph','ppn','id_akun');
    validate_fields($req_fields);
    if(empty($errors)){
      $no_sptjb  = remove_junk($db->escape($_POST['no_sptjb']));
      $nominal  = remove_junk($db->escape($_POST['nominal']));
      $ppn  = remove_junk($db->escape($_POST['ppn']));
      $pph  = remove_junk($db->escape($_POST['pph']));
-     $akun  = remove_junk($db->escape($_POST['akun']));
+     $akun  = remove_junk($db->escape($_POST['id_akun']));
      $keterangan   = remove_junk($db->escape($_POST['keterangan']));
      $date    = make_date();
      $id_pengajuan = remove_junk($db->escape($_GET['id']));
      $query  = "UPDATE detail_pengajuan SET";
-     $query .=" no_sptjb='{$no_sptjb}',nominal='{$nominal}',akun='{$akun}',keterangan='{$keterangan}',pph='{$pph}',ppn='{$ppn}'";
+     $query .=" no_sptjb='{$no_sptjb}',nominal='{$nominal}',id_akun='{$akun}',keterangan='{$keterangan}',pph='{$pph}',ppn='{$ppn}'";
      $query .=" WHERE id= '{$id_pengajuan}'";
      if($db->query($query)){
        $session->msg('s',"Detail Pengajuan edited ");
@@ -74,8 +74,15 @@
                 <div class="input-group">
                 <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
-                  <input type="text" class="form-control" name="akun" placeholder="Akun" value="<?=$detail['akun']?>">
+                  Akun</span>
+                  <select class="form-control" name="id_akun">
+                      <option value="">Pilih Jenis Pengajuan</option>
+                      <?php $jenis = find_all('akun');?>
+                    <?php  foreach ($jenis as $j): ?>
+                      <option value="<?php echo (int)$j['id'] ?>">
+                        <?php echo $j['keterangan'] ?>-<?php echo $j['mak'] ?></option>
+                    <?php endforeach; ?>
+                </select>
                </div>
               </div>
 

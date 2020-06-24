@@ -42,7 +42,7 @@
        <span>Pengajuan</span>
       </a>
       <ul class="nav submenu">
-         <li><a href="pengajuan.php">Manage Pengajuan</a> </li>
+         <li><a href="nodin.php">Manage Pengajuan</a> </li>
          <li><a href="add_pengajuan.php">Add Pengajuan</a> </li>
      </ul>
   </li>

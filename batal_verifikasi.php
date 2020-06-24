@@ -18,11 +18,15 @@
         $query .= "status_verifikasi='0'";
         $query .= "WHERE id='{$pengajuan["id"]}'";
         $result = $db->query($query);
+
+        $qd= "DELETE FROM verifikasi WHERE id_pengajuan =".$pengajuan['id'];
+        $db->query($qd);
+  
         
         $session->msg('s',' Berhasil di Batalkan');
         if($user['user_level']==2){
-           redirect('pengajuan_verifikator.php', false);
+           redirect('pengajuan_v.php?id='.$pengajuan['id_nodin'], false);
         }else{
-           redirect('pengajuan.php', false);
+           redirect('pengajuan_v.php?id='.$pengajuan['id_nodin'], false);
         }
 ?>

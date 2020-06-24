@@ -6,6 +6,34 @@ $(document).on('click','#editsp2d',function(){
     $('.modal-body #sp2d').val(sp2d);
   })
 
+  $(document).on('click','#editnodin',function(){
+    var id=$(this).data('id');
+    var tanggal=$(this).data('tanggal');
+    var pp=$(this).data('pp');
+    var no_nodin = $(this).data('no_nodin');
+        
+    $('.modal-body #id').val(id);
+    $('.modal-body #tanggal').val(tanggal);
+    $('.modal-body #pp').val(pp);
+    $('.modal-body #no_nodin').val(no_nodin);
+  })
+
+$(document).on('click','#editpencairan',function(){
+    var id=$(this).data('id');
+    var spm=$(this).data('spm');
+    var tanggal=$(this).data('tanggal');
+    var keterangan=$(this).data('keterangan');
+    var nominal = $(this).data('nominal');
+    var id_satker = $(this).data('id_satker');
+        
+    $('.modal-body #uraian').val(spm);
+    $('.modal-body #id').val(id);
+    $('.modal-body #tanggal').val(tanggal);
+    $('.modal-body #keterangan').val(keterangan);
+    $('.modal-body #nominal').val(nominal);
+    $('.modal-body #id_satker').val(id_satker);
+  })
+
 
 function suggetion() {
 

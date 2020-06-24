@@ -2,31 +2,32 @@
   $page_title = 'Dokumen';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-  page_require_level(5);
+  page_require_level(6);
 ?>
-<?php $media_files = find_all('media'); echo $id=$_GET['id'];
+<?php $media_files = find_all('media'); $id=$_GET['id'];
   $user = find_by_id('users',(int)$_SESSION['user_id']);
+  $pengajuan = find_by_id('pengajuan',$_GET['id']);
 ?>
 <?php
   if(isset($_POST['submit'])) {
      $id = $_POST['id'];
-     var_dump($_FILES['file_upload']);
+     //var_dump($_FILES['file_upload']);
        
   $photo = new Media();
-  $photo->upload($_FILES['file_upload']);
+  $photo->upload($_FILES['file_upload'],$pengajuan['SPM']);
     if($photo->process_media($id)){
-        $session->msg('s','photo has been uploaded.');
+        $session->msg('s','dokumen has been uploaded.');
             if($user['user_level']==5){
-           redirect('pengajuan_ben.php', false);
+           redirect('pengajuan_bpp.php', false);
         }else{
-        redirect('pengajuan.php?id='.$_GET['id']);
+        redirect('pengajuan_bpp.php?id='.$pengajuan['id_nodin']);
        }
     } else{
       $session->msg('d',join($photo->errors));
       if($user['user_level']==5){
-           redirect('pengajuan_ben.php', false);
+           redirect('pengajuan_bpp.php?id='.$pengajuan['id_nodin'], false);
         }else{
-        redirect('pengajuan.php?id='.$_GET['id']);
+        redirect('pengajuan_bpp.php?id='.$pengajuan['id_nodin']);
        }
     }
 

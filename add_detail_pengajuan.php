@@ -2,18 +2,18 @@
   $page_title = 'Add Detail Pengajuan';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-  page_require_level(2);
+  page_require_level(6);
   $all_categories = find_all('jenis');
   $all_photo = find_all('media');
 ?>
 <?php
  if(isset($_POST['add_detail_pengajuan'])){
-   $req_fields = array('no_sptjb','nominal','akun','keterangan','pph','ppn');
+   $req_fields = array('no_sptjb','nominal','id_akun','pph','ppn');
    validate_fields($req_fields);
    if(empty($errors)){
      $no_sptjb  = remove_junk($db->escape($_POST['no_sptjb']));
      $nominal  = remove_junk($db->escape($_POST['nominal']));
-      $akun  = remove_junk($db->escape($_POST['akun']));
+      $akun  = remove_junk($db->escape($_POST['id_akun']));
 
      if($db->escape($_POST['pph'])==''){
       $pph=0;
@@ -30,7 +30,7 @@
      $date    = make_date();
      $id_pengajuan = remove_junk($db->escape($_GET['id']));
      $query  = "INSERT INTO detail_pengajuan (";
-     $query .=" no_sptjb,nominal,akun,keterangan,id_pengajuan,pph,ppn";
+     $query .=" no_sptjb,nominal,id_akun,keterangan,id_pengajuan,pph,ppn";
      $query .=") VALUES (";
      $query .=" '{$no_sptjb}', '{$nominal}', '{$akun}', '{$keterangan}', '{$id_pengajuan}','{$pph}','{$ppn}'";
      $query .=")";
@@ -81,8 +81,15 @@
                 <div class="input-group">
                 <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
-                  <input type="text" class="form-control" name="akun" placeholder="Akun">
+                  Akun</span>
+                  <select class="form-control" name="id_akun">
+                      <option value="">Pilih Jenis Pengajuan</option>
+                      <?php $jenis = find_all('akun');?>
+                    <?php  foreach ($jenis as $j): ?>
+                      <option value="<?php echo (int)$j['id'] ?>">
+                        <?php echo $j['keterangan'] ?>-<?php echo $j['mak'] ?></option>
+                    <?php endforeach; ?>
+                </select>
                </div>
               </div>
 
@@ -99,8 +106,8 @@
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
-                  <input type="number" class="form-control" name="pph" placeholder="pph" value="0">
+                   PPH</span>
+                  <input type="number" class="form-control" name="pph" placeholder="pph" value="0" placeholder="PPH">
                </div>
               </div>
 
@@ -108,7 +115,7 @@
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
+                  PPN</span>
                   <input type="number" class="form-control" name="ppn" placeholder="ppn" value="0">
                </div>
               </div>

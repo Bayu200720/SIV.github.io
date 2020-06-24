@@ -5,8 +5,9 @@
    page_require_level(3);
 ?>
 <?php
-$sales = find_all('pengajuan');
-
+$sales = find_all_global('pengajuan',$_GET['id'],'id_nodin');
+$id = find_all_global('pengajuan',$_GET['id'],'id_nodin');
+$idi= $_GET['id'];
 ?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
@@ -23,7 +24,7 @@ $sales = find_all('pengajuan');
             <span>All Pengajuan</span>
           </strong>
           <div class="pull-right">
-            <a href="add_pengajuan.php" class="btn btn-primary">Add pengajuan</a>
+            <a href="add_pengajuan.php?id=<?=$idi;?>" class="btn btn-primary">Add pengajuan</a>
           </div>
         </div>
         <div class="panel-body">
@@ -32,12 +33,9 @@ $sales = find_all('pengajuan');
               <tr>
                 <th class="text-center" style="width: 50px;">#</th>
                 <th> SPM </th>
-                <th class="text-center" style="width: 15%;"> Tanggal</th>
-                <th class="text-center" style="width: 15%;"> Jenis </th>
                 <th class="text-center" style="width: 15%;"> Status Verifikasi </th> 
                 <th class="text-center" style="width: 15%;"> Status SPM </th>              
-                <th class="text-center" style="width: 15%;"> Status KPPN </th>
-                
+                <th class="text-center" style="width: 15%;"> Status KPPN </th> 
                 <th class="text-center" style="width: 15%;"> Status SP2D </th>
                 <th class="text-center" style="width: 15%;"> Upload </th>
                 <th class="text-center" style="width: 100px;"> Actions </th>
@@ -48,8 +46,6 @@ $sales = find_all('pengajuan');
              <tr>
                <td class="text-center"><?php echo count_id();?></td>
                <td><?php echo remove_junk($sale['SPM']); ?></td>
-               <td class="text-center"><?php echo $sale['tanggal']; ?></td>
-               <td class="text-center"><?php $jenis = find_by_id('jenis',$sale['id_jenis']); echo $jenis['keterangan'];  ?></td>
              <td class="text-center"><?php if($sale['status_verifikasi']==0){?><a href="update_verifikasi.php?id=<?=$sale['id']?>" class="btn btn-success">Proses</a><?php }else{?>
              <a href="batal_verifikasi.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal
               [<?php $user = find_by_id('users',(int)$sale['status_verifikasi']);echo $user['name'];?>]

@@ -58,7 +58,7 @@
         <!-- admin menu -->
         <?php include_once('admin_menu.php');?>
 
-      <?php elseif($user['user_level'] === '2'): ?>
+      <?php elseif($user['user_level'] === '2' or $user['user_level']== '7'): ?>
         <!-- Special user -->
         <?php include_once('special_menu.php');?>
 

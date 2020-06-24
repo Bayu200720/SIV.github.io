@@ -8,7 +8,7 @@ function find_all($table) {
    global $db;
    if(tableExists($table))
    {
-     return find_by_sql("SELECT * FROM ".$db->escape($table));
+     return find_by_sql("SELECT * FROM ".$db->escape($table)." ORDER BY id DESC");
    }
 }
 /*--------------------------------------------------------------*/
@@ -49,6 +49,36 @@ function find_all_global($table,$id,$key) {
    }
 }
 
+//mengambil spm yang belom di sp2d kan berdasarkan satker
+function find_tt($id) {
+  global $db;
+ 
+    return find_by_sql("SELECT * FROM `nodin` n,pengajuan p, detail_pengajuan dp WHERE n.id=p.id_nodin and p.id=dp.id_pengajuan and n.id_satker ={$id} and p.status_sp2d=0 and p.status_kppn!=0");
+
+}
+
+function find_ss($id_satker,$id_status) {
+  global $db;
+ 
+return find_by_sql("SELECT p.nominal as nominal,p.spm as spm,p.id_satker as id_satker,k.id as id FROM `pencairan` p,k_cair k WHERE p.status=k.id and p.status={$id_status} and p.id_satker={$id_satker}");
+
+}
+
+//gabungan tabel pengajuan, nodin,dan detail pengajuan
+function find_n_p_dp($id) {
+  global $db;
+ 
+    return find_by_sql("SELECT n.p_pengajuan as pegawai,sum(dp.nominal) as nominal,p.SPM as spm,n.tanggal as tgl,a.mak as akun FROM `nodin` n,pengajuan p,detail_pengajuan dp,akun a WHERE a.id=dp.id_akun and n.id=p.id_nodin and p.id=dp.id_pengajuan and n.id = {$id} group by p.SPM");
+
+}
+//ambil jumlah nominal SPM
+function nominalSPM($id) {
+  global $db;
+    return find_by_sql("SELECT sum(dp.nominal) as nom from pengajuan p,detail_pengajuan dp where p.id=dp.id_pengajuan and p.id={$id} group by id_pengajuan");
+
+}
+
+
 
 /*--------------------------------------------------------------*/
 /* Function for find all database tabledetaip pengajuan by id pengajuan
@@ -76,6 +106,58 @@ function find_by_id($table,$id)
   $id = (int)$id;
     if(tableExists($table)){
           $sql = $db->query("SELECT * FROM {$db->escape($table)} WHERE id='{$db->escape($id)}' LIMIT 1");
+          if($result = $db->fetch_assoc($sql))
+            return $result;
+          else
+            return null;
+     }
+}
+
+function sumStatus($id)
+{
+  global $db;
+  $id = (int)$id;
+          $sql = $db->query("SELECT sum(nominal) as jum  FROM pencairan WHERE status='{$db->escape($id)}' ");
+          if($result = $db->fetch_assoc($sql))
+            return $result;
+          else
+            return null;
+    
+}
+
+function find_DESC($table)
+{
+  global $db;
+  $id = (int)$id;
+    if(tableExists($table)){
+          $sql = $db->query("SELECT * FROM {$db->escape($table)} ORDER BY id DESC LIMIT 1");
+          if($result = $db->fetch_assoc($sql))
+            return $result;
+          else
+            return null;
+     }
+}
+
+function find_Tpengajuan($id)
+{
+  global $db;
+  $id = (int)$id;
+    
+    $sql = $db->query("SELECT SPM,tanggal,id_akun,id_satker,sum(nominal)-(sum(ppn)+sum(pph)) as jum FROM `detail_pengajuan` dp,pengajuan p,nodin n WHERE p.id=dp.id_pengajuan and id_pengajuan= {$id} and n.id = p.id_nodin");
+          if($result = $db->fetch_assoc($sql))
+            return $result;
+          else
+            return null;
+   
+}
+
+//find filed yg ditentukan satu record
+function find_by_filed($table,$id,$filed)
+{
+  global $db;
+  $id = (int)$id;
+    if(tableExists($table)){
+          $sql = $db->query("SELECT * FROM {$db->escape($table)} WHERE {$db->escape($filed)}='{$db->escape($id)}' LIMIT 1");
           if($result = $db->fetch_assoc($sql))
             return $result;
           else

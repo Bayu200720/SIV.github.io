@@ -49,7 +49,7 @@ $sales = find_detail($_GET['id']);
              <tr>
                <td class="text-center"><?php echo count_id();?></td>
                <td class="text-center"><?php echo $sale['no_sptjb']; ?></td>
-               <td class="text-center"><?php echo $sale['akun']; ?></td>
+               <td class="text-center"><?php $akun=find_all_by_id('akun',$sale['id_akun']); echo $akun['mak'] ; ?></td>
                <td class="text-center"><?php echo rupiah($sale['nominal']); ?></td>
                <td class="text-center"><?php echo rupiah($sale['pph']); ?></td>
                <td class="text-center"><?php echo rupiah($sale['ppn']); ?></td>

@@ -43,12 +43,17 @@ $sales = find_all('pengajuan');
              <tr>
                <td class="text-center"><?php echo count_id();?></td>
                <td><?php echo remove_junk($sale['SPM']); ?></td>
-               <td class="text-center"><?php echo $sale['tanggal']; ?></td>
-               <td class="text-center"><?php $jenis = find_by_id('jenis',$sale['id_jenis']); echo $jenis['keterangan'];  ?></td>
+               <td class="text-center"><?php $nodin= find_by_id('nodin',$sale['id_nodin']);echo $nodin['tanggal']; ?></td>
+               <td class="text-center"><?php $nodin= find_by_id('nodin',$sale['id_nodin']); $jenis = find_by_id('jenis',$nodin['id_jenis']); echo $jenis['keterangan'];?></td>
           
             
-             <td class="text-center"><?php if($sale['status_kppn']==0){?><a href="update_kppn.php?id=<?=$sale['id']?>" class="btn btn-success">Proses</a><?php }else{?>
+             <td class="text-center">
+             <?php if($sale['status_spm']==0){ ?>
+              <span class="label label-danger">belom di validasi oleh pembuat SPM</span>
+             <?php }else{ ?>
+             <?php if($sale['status_kppn']==0){?><a href="update_kppn.php?id=<?=$sale['id']?>" class="btn btn-success">Proses</a><?php }else{?>
              <a href="batal_kppn.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a><?php } ?>
+             <?php } ?>
             </td>
 
             

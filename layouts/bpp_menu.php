@@ -12,7 +12,7 @@
        <span>Pengajuan</span>
       </a>
       <ul class="nav submenu">
-         <li><a href="pengajuan_bpp.php">Manage Pengajuan</a> </li>
+         <li><a href="nodin_bpp.php">Manage Pengajuan</a> </li>
      </ul>
   </li>
 </ul>

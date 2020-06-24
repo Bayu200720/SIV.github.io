@@ -33,7 +33,7 @@ class  Media {
      }
    }
 
-  public function upload($file)
+  public function upload($file,$spm)
   {
     if(!$file || empty($file) || !is_array($file)):
       $this->errors[] = "No file was uploaded.";
@@ -47,9 +47,9 @@ class  Media {
     else:
       $this->imageInfo = getimagesize($file['tmp_name']);
       $h= explode(".",$_FILES['file_upload']['name']);
-       date_default_timezone_set('Asia/Jakarta');
+      date_default_timezone_set('Asia/Jakarta');
       $waktu= date('d-m-Y-His');
-       $nama = $h[0]."-".$waktu.".".$h[1];
+      $nama = $h[0]."-".$spm."-".$waktu.".".$h[1];
       $this->fileName = $nama;  
       $this->fileType  = $this->imageInfo['mime'];
       $this->fileTempPath = $file['tmp_name'];
