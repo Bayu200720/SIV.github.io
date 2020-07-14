@@ -45,8 +45,19 @@ function find_all_global($table,$id,$key) {
    global $db;
    if(tableExists($table))
    {
-     return find_by_sql("SELECT * FROM ".$db->escape($table)." WHERE {$db->escape($key)} ='{$db->escape($id)}'");
+     return find_by_sql("SELECT * FROM ".$db->escape($table)." WHERE {$db->escape($key)} ='{$db->escape($id)}' ORDER BY id DESC");
    }
+}
+
+/*--------------------------------------------------------------*/
+/* Function for find all database table global
+/*--------------------------------------------------------------*/
+function find_filed_tabel($database,$tb) {
+  global $db;
+  if(tableExists($table))
+  {
+    return find_by_sql("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='{$database}' AND TABLE_NAME='{$tb}'");
+  }
 }
 
 //mengambil spm yang belom di sp2d kan berdasarkan satker
@@ -144,6 +155,19 @@ function find_Tpengajuan($id)
   $id = (int)$id;
     
     $sql = $db->query("SELECT SPM,tanggal,id_akun,id_satker,sum(nominal)-(sum(ppn)+sum(pph)) as jum FROM `detail_pengajuan` dp,pengajuan p,nodin n WHERE p.id=dp.id_pengajuan and id_pengajuan= {$id} and n.id = p.id_nodin");
+          if($result = $db->fetch_assoc($sql))
+            return $result;
+          else
+            return null;
+   
+}
+
+function find_NominalPengajuan($id)
+{
+  global $db;
+  $id = (int)$id;
+    
+    $sql = $db->query("SELECT SPM,tanggal,id_akun,id_satker,sum(nominal) as jum FROM `detail_pengajuan` dp,pengajuan p,nodin n WHERE p.id=dp.id_pengajuan and id_pengajuan= {$id} and n.id = p.id_nodin");
           if($result = $db->fetch_assoc($sql))
             return $result;
           else

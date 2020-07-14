@@ -37,13 +37,18 @@
      </ul>
   </li>
   <li>
-    <a href="#" class="submenu-toggle">
+    <a href="nodin.php" class="submenu-toggle">
       <i class="glyphicon glyphicon-th-list"></i>
        <span>Pengajuan</span>
       </a>
+  </li>
+  <li>
+    <a href="#" class="submenu-toggle">
+      <i class="glyphicon glyphicon-th-list"></i>
+       <span>Verifikasi</span>
+      </a>
       <ul class="nav submenu">
-         <li><a href="nodin.php">Manage Pengajuan</a> </li>
-         <li><a href="add_pengajuan.php">Add Pengajuan</a> </li>
+         <li><a href="pengajuan_v_admin1.php">Manage Verifiaksi</a> </li>
      </ul>
   </li>
    

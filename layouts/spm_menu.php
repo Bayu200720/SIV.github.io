@@ -12,7 +12,7 @@
       </a>
       <ul class="nav submenu">
          <li><a href="pengajuan_spm.php">Manage Pengajuan</a> </li>
-         <li><a href="add_pengajuan.php">Add Pengajuan</a> </li>
+         
      </ul>
   </li>
 </ul>

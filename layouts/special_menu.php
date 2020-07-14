@@ -5,7 +5,6 @@
       <span>Dashboard</span>
     </a>
   </li>
-
   <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-th-list"></i>
@@ -13,7 +12,6 @@
       </a>
       <ul class="nav submenu">
          <li><a href="pengajuan_verifikator.php">Manage Pengajuan</a> </li>
-         <li><a href="add_pengajuan.php">Add Pengajuan</a> </li>
      </ul>
   </li>
 </ul>

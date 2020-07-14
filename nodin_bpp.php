@@ -5,7 +5,8 @@
    page_require_level(6);
 ?>
 <?php
-$sales = find_all_global('nodin',$_SESSION['user_id'],'id_satker');
+$user=find_by_id('users',$_SESSION['user_id']);
+$sales = find_all_global('nodin',$user['id_satker'],'id_satker');
 ?>
 <?php
  if(isset($_POST['submit_nodin'])){
@@ -86,6 +87,59 @@ $sales = find_all_global('nodin',$_SESSION['user_id'],'id_satker');
 
 }
 
+
+if($_GET['p']=='update'){
+
+    $id   = remove_junk($db->escape($_GET['id']));
+  
+    $query  = "UPDATE nodin SET ";
+    $query .=" status_pengajuan= 1";
+    $query .=" WHERE id='{$id}'";
+  //echo $query;exit();
+    if($db->query($query)){
+      $session->msg('s',"Telah di ajukan ke bagian keuangan ");
+      if($user['user_level']==2){
+       redirect('nodin_bpp.php', false);
+      }else{
+      redirect('nodin_bpp.php', false);
+      }
+    } else {
+      $session->msg('d',' Sorry failed to Pengajuan!');
+      if($user['user_level']==2){
+       redirect('nodin_bpp.php', false);
+     }else{
+        redirect('nodin_bpp.php', false);
+     }
+    }
+
+}
+
+if($_GET['p']=='batal'){
+
+  $id   = remove_junk($db->escape($_GET['id']));
+
+  $query  = "UPDATE nodin SET ";
+  $query .=" status_pengajuan= 0";
+  $query .=" WHERE id='{$id}'";
+//echo $query;exit();
+  if($db->query($query)){
+    $session->msg('s',"Telah di berhasil di batalkan  ");
+    if($user['user_level']==2){
+     redirect('nodin_bpp.php', false);
+    }else{
+    redirect('nodin_bpp.php', false);
+    }
+  } else {
+    $session->msg('d',' Sorry failed to Pengajuan!');
+    if($user['user_level']==2){
+     redirect('nodin_bpp.php', false);
+   }else{
+      redirect('nodin_bpp.php', false);
+   }
+  }
+
+}
+
  ?>
 
 <?php
@@ -149,7 +203,8 @@ if($_GET['status']=='delete_nodin'){
                 <th class="text-center" style="width: 15%;"> Jenis </th>
                 <th class="text-center" style="width: 15%;"> Pegawai Pengajuan </th>
                 <th class="text-center" style="width: 15%;">Nomor Nodin </th>
-                <th class="text-center" style="width: 100px;"> Cetak Nodin </th>              
+                <th class="text-center" style="width: 100px;"> Cetak Nodin </th>
+                <th class="text-center" style="width: 100px;"> Status Pengajuan </th>               
                 <th class="text-center" style="width: 100px;"> Actions </th>
              </tr>
             </thead>
@@ -166,7 +221,16 @@ if($_GET['status']=='delete_nodin'){
             <td class="text-center">
              <a href="cetakNodin.php?id=<?=$sale['id']?>" class="btn btn-primary">Cetak</a>
             </td>
-               <td class="text-center">
+            <td class="text-center">
+                  <?php if($sale['status_pengajuan'] == 1){?>
+                    <a href="nodin_bpp.php?id=<?=$sale['id']?>&key=ajukan&p=batal" class="btn btn-success">Sudah Diajukan</a>
+                  <?php }else{ ?>
+                    <a href="nodin_bpp.php?id=<?=$sale['id']?>&key=ajukan&p=update" class="btn btn-primary">Ajukan</a>
+                  <?php } ?>
+            
+            </td>
+
+            <td class="text-center">
                   <div class="btn-group">
                      <a href="#"   class=""   >
                        
@@ -216,7 +280,7 @@ if($_GET['status']=='delete_nodin'){
        <div class="form-group">
         <label for="exampleInputEmail1">Pegawai Pengajuan</label>
         <input type="text" class="form-control" id="nodin" name="p_pengajuan" placeholder="Pegawai Pengajuan">
-        <input type="hidden" class="form-control" id="id" value="<?php echo $_SESSION['user_id'];?>" name="id_satker" >
+        <input type="hidden" class="form-control" id="id" value="<?php $users=find_by_id('users',$_SESSION['user_id']);echo $users['id_satker'] ;?>" name="id_satker" >
        </div>
        <div class="form-group">
         <label for="exampleInputEmail1">Jenis Pengajuan</label>
@@ -263,7 +327,7 @@ if($_GET['status']=='delete_nodin'){
         <label for="exampleInputEmail1">Pegawai Pengajuan</label>
         <input type="text" class="form-control" id="pp" name="p_pengajuan" placeholder="Pegawai Pengajuan">
         <input type="hidden" class="form-control" id="id" name="id" >
-        <input type="hidden" class="form-control" id="id_user" value="<?=$_SESSION['user_id'];?>" name="id_satker" >
+        <input type="hidden" class="form-control" id="id_user" value="<?php $users=find_by_id('users',$_SESSION['user_id']);echo $users['id_satker'] ;?>" name="id_satker" >
        </div>
        <div class="form-group">
         <label for="exampleInputEmail1">Jenis Pengajuan</label>

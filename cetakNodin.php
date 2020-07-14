@@ -2,7 +2,7 @@
   $page_title = 'All Pengajuan';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-   page_require_level(3);
+   page_require_level(6);
 ?>
 <?php
 $nodin = find_all_global('nodin',$_GET['id'],'id');

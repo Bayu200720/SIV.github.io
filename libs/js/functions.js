@@ -1,3 +1,38 @@
+$(document).on('click','#import',function(){
+  var id=$(this).data('id');
+  $('.modal-body #id').val(id);   
+});
+
+$(document).on('click','#UploadSPM',function(){
+  var id=$(this).data('id');
+  $('.modal-body #id').val(id);   
+});
+
+$(document).on('click','#penolakan',function(){
+  var id=$(this).data('id');
+  var keterangan=$(this).data('keterangan');
+  $('.modal-body #id').val(id);   
+  $('.modal-body #keterangan').val(keterangan);   
+});
+$(document).on('click','#kekurangan',function(){
+  var id=$(this).data('id');
+  var verifikasi=$(this).data('verifikasi');
+  $('.modal-body #id').val(id);   
+  $('.modal-body #verifikasi').val(verifikasi);   
+});
+
+$(document).on('click','#editakun',function(){
+  var id=$(this).data('id');
+  var kode=$(this).data('kode');
+  var uraian=$(this).data('uraian');
+  var tahun=$(this).data('tahun');
+  $('.modal-body #id').val(id);   
+  $('.modal-body #kode').val(kode);   
+  $('.modal-body #uraian').val(uraian); 
+  $('.modal-body #tahun').val(tahun); 
+});
+
+
 $(document).on('click','#editsp2d',function(){
     var id=$(this).data('id');
     var sp2d=$(this).data('sp2d');
@@ -33,6 +68,8 @@ $(document).on('click','#editpencairan',function(){
     $('.modal-body #nominal').val(nominal);
     $('.modal-body #id_satker').val(id_satker);
   })
+
+
 
 
 function suggetion() {

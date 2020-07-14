@@ -3,8 +3,10 @@ $page_title = 'Report';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
   // page_require_level(3);
-  $results = find_all_global('detail_pengajuan',$_GET['id'],'id_pengajuan');
-  $spm = find_all_global('pengajuan',$_GET['id'],'id');
+  $spm = find_all_global('pengajuan',$_GET['id'],'id_nodin');
+  //var_dump($spm);
+  $results = find_all_global('detail_pengajuan',$spm[0]['id'],'id_pengajuan');
+  
   $user = find_all_global('users',$_SESSION['user_id'],'id');
 ?>
 

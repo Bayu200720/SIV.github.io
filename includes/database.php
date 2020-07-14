@@ -65,6 +65,10 @@ public function fetch_array($statement)
 {
   return mysqli_fetch_array($statement);
 }
+public function fetch_row($statement)
+{
+  return mysqli_fetch_row($statement);
+}
 public function fetch_object($statement)
 {
   return mysqli_fetch_object($statement);

@@ -7,8 +7,10 @@ class  Media {
   public $fileType;
   public $fileTempPath;
   //Set destination for upload
+  public $spmPath = SITE_ROOT.DS.'..'.DS.'uploads/spm';
   public $userPath = SITE_ROOT.DS.'..'.DS.'uploads/users';
   public $productPath = SITE_ROOT.DS.'..'.DS.'uploads/products';
+
 
 
   public $errors = array();
@@ -36,6 +38,7 @@ class  Media {
   public function upload($file,$spm)
   {
     if(!$file || empty($file) || !is_array($file)):
+       
       $this->errors[] = "No file was uploaded.";
       return false;
     elseif($file['error'] != 0):
@@ -96,7 +99,7 @@ class  Media {
       $this->errors[] = "The file {$this->fileName} already exists.";
       return false;
     }
-
+    //$h =$this->spmPath.'/'.$this->fileName; var_dump($h); exit();// echo 
     if(move_uploaded_file($this->fileTempPath,$this->productPath.'/'.$this->fileName))
     {
 
@@ -112,6 +115,48 @@ class  Media {
     }
 
   }
+
+   /*--------------------------------------------------------------*/
+ /* Function for Process spm file
+ /*--------------------------------------------------------------*/
+ public function process_spm($id){
+  if(!empty($this->errors)){
+      return false;
+    }
+  if(empty($this->fileName) || empty($this->fileTempPath)){
+      $this->errors[] = "The file location was not available.";
+      return false;
+    }
+
+  if(!is_writable($this->spmPath)){
+      $this->errors[] = $this->spmPath." Must be writable!!!.";
+      return false;
+    }
+
+  if(file_exists($this->spmPath."/".$this->fileName)){
+    $this->errors[] = "The file {$this->fileName} already exists.";
+    return false;
+  }
+  //$h =$this->$spmPath.'/'.$this->fileName; var_dump($h); exit();
+  
+  if(move_uploaded_file($this->fileTempPath,$this->spmPath.'/'.$this->fileName))
+  {
+
+    if($this->insert_spm($id)){
+      unset($this->fileTempPath);
+      return true;
+    }
+
+  } else {
+
+    
+    //$h = $this->$productPath;
+
+    $this->errors[] = "The file upload failed, possibly due to incorrect permissions on the upload folder.".$h;
+    return false;
+  }
+
+}
   /*--------------------------------------------------------------*/
   /* Function for Process user image
   /*--------------------------------------------------------------*/
@@ -187,6 +232,16 @@ class  Media {
        return ($db->query($sql) ? true : false);
 
   }
+  /*--------------------------------------------------------------*/
+/* Function for insert File SPM
+/*--------------------------------------------------------------*/
+private function insert_spm($id){
+
+  global $db;
+  $sql  = "UPDATE pengajuan SET file_spm ='{$db->escape($this->fileName)}' WHERE id= '{$db->escape($id)}'";
+return ($db->query($sql) ? true : false);
+
+}
 /*--------------------------------------------------------------*/
 /* Function for Delete media by id
 /*--------------------------------------------------------------*/

@@ -61,8 +61,7 @@ $sales = find_all('pengajuan');
                 <th class="text-center" style="width: 15%;"> Tanggal</th>
                 <th class="text-center" style="width: 15%;"> Jenis </th>          
                 <th class="text-center" style="width: 15%;"> Status SP2D </th>
-                <th class="text-center" style="width: 15%;"> Tanda Terima Pencairan </th>
-                <th class="text-center" style="width: 15%;"> Upload </th>
+                <th class="text-center" style="width: 15%;"> Dokumen </th>
                 <th class="text-center" style="width: 100px;"> Input SP2D </th>
              </tr>
             </thead>
@@ -80,14 +79,15 @@ $sales = find_all('pengajuan');
               <span class="label label-danger">belom di validasi oleh petugas pengirim SPM ke KPPN</span>
              <?php }else{ ?>
             <?php if($sale['status_sp2d']==0){?><a href="update_sp2d.php?id=<?=$sale['id']?>" class="btn btn-success">Proses</a><?php }else{?>
+              <span class="label label-success">Sudah di Cairkan</span> <br>
              <a href="batal_sp2d.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a><?php } ?>
             <?php } ?>
             </td>
-            <td class="text-center"><a href="cetak_TandaTerima.php" class="btn btn-warning">Cetak</a></td>
-            <td class="text-center"><?php if($sale['upload']=='0'){?><a href="media.php?id=<?=$sale['id']?>" class="btn btn-primary">Upload</a><?php }else{?>
+            <td class="text-center"><?php if($sale['upload']==''){?><a href="media.php?id=<?=$sale['id']?>" class="btn btn-primary">Upload</a><?php }else{?>
              <a href="uploads/products/<?=$sale['upload']?>" class="btn btn-success" target="_blank">Preview</a>
+              <?php if($user['user_level'] != 2 and $user['user_level'] != 3 and $user['user_level'] != 4 and $user['user_level'] != 5 and $user['user_level'] != 7){?>      
              <a href="batal_upload.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a>
-             <?php } ?>
+             <?php }} ?>
             </td>
             <td><?php if($sale['sp2d'] == ''){?><a href="#" class="btn btn-primary" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>'>Input SP2D</a><?php }else{?>
               <a href="#" class="btn btn-warning" id="editsp2d" data-toggle="modal" data-target="#exampleModal" data-id='<?=$sale['id'];?>' data-sp2d='<?=$sale['sp2d'];?>'><?=$sale['sp2d'];?></a> <?php } ?>

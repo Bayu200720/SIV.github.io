@@ -2,10 +2,12 @@
   $page_title = 'All Pengajuan';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-   page_require_level(3);
+   page_require_level(6);
 
    $nodin = find_all_global('nodin',$_GET['id'],'id');//var_dump($nodin[0]['id_satker']);exit();
    $satker = find_all_global('satker',$nodin[0]['id_satker'],'id');
+   $pengajuan = find_all_global('pengajuan',$nodin[0]['id'],'id_nodin');
+   $verifikasi = find_all_global('verifikasi',$pengajuan[0]['id'],'id_pengajuan');
  
 
 ?>
@@ -78,7 +80,7 @@ table td {padding-left:3px;}
       <tr>
         <td><span class="style28">Nilai Pengajuan</span></td>
         <td>:</td>
-        <td><?php $nominal = nominalSPM($_GET['peng']);echo rupiah($nominal[0]['nom']);  ?><span style="padding-right:10px;"><span class="style28">
+        <td><?php $nominal = nominalSPM($pengajuan[0]['id']);echo rupiah($nominal[0]['nom']);  ?><span style="padding-right:10px;"><span class="style28">
         <span style="padding-right:10px;"><span style="padding-right:10px;"><span style="padding-right:10px;">
         <span style="padding-right:10px;"><span style="padding-right:10px;"><span style="padding-right:10px;"><span style="padding-right:10px;">
         </span></span></span></span> </span></span> </span> </span></span></td>
@@ -145,51 +147,51 @@ table td {padding-left:3px;}
         <td class="style28"><div align="center"><span class="style28">&nbsp;
           1 </span></div></td>
         <td class="style28"><span class="style28">&nbsp;Ketersediaan Dana pada RKA-KL</span></td>
-        <td><span class="style28"></span></td>
-        <td><span class="style28"></span></td>
+        <td><center><span class="style28"><?php if($verifikasi[0]['rkakl']==1){echo "V";}?></span></center></td>
+        <td><center><span class="style28"><?php if($verifikasi[0]['rkakl']==1){echo "Lengkap";}?></span></center></td>
       </tr>
 
 	<tr>
         <td class="style28"><div align="center"><span class="style28">2</span></div></td>
         <td class="style28"><span class="style28">Kesesuaian Kode Anggaran</span></td>
-        <td><span class="style28"></span></td>
-        <td><span class="style28"></span></td>
+        <td><center><span class="style28"><?php if($verifikasi[0]['kode_anggaran']==1){echo "V";}?></span></center></td>
+        <td><center><span class="style28"><?php if($verifikasi[0]['kode_anggaran']==1){echo "Lengkap";}?></span></center></td>
       </tr>
 	<tr>
 	  <td class="style28"><div align="center">3</div></td>
 	  <td class="style28"> Nota Dinas pengajuan</td>
-	  <td>&nbsp;</td>
-	  <td>&nbsp;</td>
+	  <td><center><span class="style28"><?php if($verifikasi[0]['nd_pengajuan']==1){echo "V";}?></span></center></td>
+    <td><center><span class="style28"><?php if($verifikasi[0]['nd_pengajuan']==1){echo "Lengkap";}?></span></center></td>
 	  </tr>
 	<tr>
 	  <td class="style28"><div align="center">4</div></td>
 	  <td class="style28"> SPP aplikasi</td>
-	  <td>&nbsp;</td>
-	  <td>&nbsp;</td>
+	  <td><center><span class="style28"><?php if($verifikasi[0]['spp']==1){echo "V";}?></span></center></td>
+    <td><center><span class="style28"><?php if($verifikasi[0]['spp']==1){echo "Lengkap";}?></span></center></td>
 	  </tr>
 	<tr>
 	  <td class="style28"><div align="center">5</div></td>
 	  <td class="style28"> SPTB</td>
-	  <td>&nbsp;</td>
-	  <td>&nbsp;</td>
+	  <td><center><span class="style28"><?php if($verifikasi[0]['sptb']==1){echo "V";}?></span></center></td>
+    <td><center><span class="style28"><?php if($verifikasi[0]['sptb']==1){echo "Lengkap";}?></span></center></td>
 	  </tr>
 	<tr>
 	  <td class="style28"><div align="center">6</div></td>
 	  <td class="style28"> Daftar Nominatif</td>
-	  <td>&nbsp;</td>
-	  <td>&nbsp;</td>
+	  <td><center><span class="style28"><?php if($verifikasi[0]['daftar_nominatif']==1){echo "V";}?></span></center></td>
+    <td><center><span class="style28"><?php if($verifikasi[0]['daftar_nominatif']==1){echo "Lengkap";}?></span></center></td>
 	  </tr>
 	<tr>
 	  <td class="style28"><div align="center">7</div></td>
 	  <td class="style28"> SK</td>
-	  <td>&nbsp;</td>
-	  <td>&nbsp;</td>
+	  <td><center><span class="style28"><?php if($verifikasi[0]['sk']==1){echo "V";}?></span></center></td>
+    <td><center><span class="style28"><?php if($verifikasi[0]['sk']==1){echo "Lengkap";}?></span></center></td>
 	  </tr>
 	<tr>
 	  <td class="style28"><div align="center">8</div></td>
 	  <td class="style28">SSP</td>
-	  <td>&nbsp;</td>
-	  <td>&nbsp;</td>
+	  <td><center><span class="style28"><?php if($verifikasi[0]['ssp']==1){echo "V";}?></span></center></td>
+    <td><center><span class="style28"><?php if($verifikasi[0]['ssp']==1){echo "Lengkap";}?></span></center></td>
 	  </tr>
 	  
   
@@ -200,11 +202,11 @@ table td {padding-left:3px;}
         <tr>
           <td width="111" rowspan="2">Status dokumen </td>
           <td width="88">Terima</td>
-          <td width="172">&nbsp;</td>
+          <td width="172">&nbsp;<center><?php if($verifikasi[0]['status_pengajuan']==1){echo "V";}?></center></td>
         </tr>
         <tr>
           <td>Tolak</td>
-          <td>&nbsp;</td>
+          <td>&nbsp;<center><?php if($verifikasi[0]['status_pengajuan']==0){echo "V";}?></center></td>
         </tr>
       </table>
       <p>&nbsp;</p>
@@ -216,12 +218,16 @@ table td {padding-left:3px;}
       PPK/BPP/ WBPP / PUM</p>
       <p align="center" class="style28"><br />
         <br />
+        <img width="100px" height="100px" src="uploads/users/<?php echo $satker[0]['ttd'];?>.png" alt="">
       </p>
       <p align="center" class="style28">(____________________)</p>      </td>
     <td width="33%" valign="top"><p align="center" class="style28">Mengetahui,<br />
       Tgl<br />
       Kasubag Verifikasi</p>
       <p align="center" class="style28"><br />
+      <?php if($pengajuan[0]['verifikasi_kasubbag_v']==1){?>  
+           <img width="100px" height="100px" src="uploads/users/hendri.png" alt="">
+      <?php } ?>
         <br />
       </p>
       <p align="center" class="style28">(____________________)</p>      </td>
@@ -229,6 +235,10 @@ table td {padding-left:3px;}
       Tgl:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      Pukul :<br />
     Verifikator Keuangan</p>
       <p align="center" class="style28"><br />
+      <?php if($verifikasi[0]['status_pengajuan']==1){?>
+        <?php $user= find_by_id('users',$pengajuan[0]['status_verifikasi']);?>
+        <img width="100px" height="100px" src="uploads/users/<?=$user['ttd']?>.png" alt="">
+      <?php } ?>
         <br />
         <br>
         (___________________)</p>
@@ -266,27 +276,27 @@ table td {padding-left:3px;}
         <td class="style28"><div align="center">&nbsp;
           1 </div></td>
         <td class="style28">SP2D</td>
-        <td><span class="style28"></span></td>
-        <td><span class="style28"></span></td>
+        <td><center><span class="style28"><?php if($verifikasi[0]['sp2d']==1){echo "V";}?></span></center></td>
+        <td><center><span class="style28"><?php if($verifikasi[0]['sp2d']==1){echo "Lengkap";}?></span></center></td>
       </tr>
 
       <tr>
         <td class="style28"><div align="center">2</div></td>
         <td class="style28"> Tanda Terima Penerima Honor </td>
-        <td><span class="style28"></span></td>
-        <td><span class="style28"></span></td>
+        <td><center><span class="style28"><?php if($verifikasi[0]['tanda_terima_honor']==1){echo "V";}?></span></center></td>
+        <td><center><span class="style28"><?php if($verifikasi[0]['tanda_terima_honor']==1){echo "Lengkap";}?></span></center></td>
       </tr>
       <tr>
         <td class="style28"><div align="center">3</div></td>
         <td class="style28">SK Honor  disesuaikan dengan yang menerima</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
+        <td><center><span class="style28"><?php if($verifikasi[0]['sk_honor']==1){echo "V";}?></span></center></td>
+         <td><center><span class="style28"><?php if($verifikasi[0]['sk_honor']==1){echo "Lengkap";}?></span></center></td>
       </tr>
       <tr>
         <td class="style28"><div align="center">4</div></td>
         <td class="style28">SKTJM KPA</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
+        <td><center><span class="style28"><?php if($verifikasi[0]['sktjm_kpa']==1){echo "V";}?></span></center></td>
+         <td><center><span class="style28"><?php if($verifikasi[0]['sktjm_kpa']==1){echo "Lengkap";}?></span></center></td>
       </tr>
       <tr>
         <td class="style28"><div align="center"></div></td>

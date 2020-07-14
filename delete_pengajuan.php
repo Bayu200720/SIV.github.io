@@ -1,7 +1,7 @@
 <?php
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
-  page_require_level(3);
+  page_require_level(6);
  // page_require_level(5);
 ?>
 <?php
@@ -10,9 +10,9 @@
   if(!$d_sale){
     $session->msg("d","Missing pengajuan id.");
       if($user['user_level']==2){
-              redirect('pengajuan.php', false);
+              redirect('pengajuan_bpp.php', false);
           }else{
-            redirect('pengajuan.php?id='.$d_sale["id_nodin"].'');
+            redirect('pengajuan_bpp.php?id='.$d_sale["id_nodin"].'');
         }
   }
 ?>
@@ -22,16 +22,16 @@
   if($delete_id){
       $session->msg("s","pengajuan deleted.");
       if($user['user_level']==2){
-              redirect('pengajuan.php', false);
+              redirect('pengajuan_bpp.php', false);
           }else{
-            redirect('pengajuan.php?id='.$d_sale["id_nodin"].'');
+            redirect('pengajuan_bpp.php?id='.$d_sale["id_nodin"].'');
         }
   } else {
       $session->msg("d","pengajuan deletion failed.");
           if($user['user_level']==2){
-              redirect('pengajuan.php', false);
+              redirect('pengajuan_bpp.php', false);
           }else{
-            redirect('pengajuan.php?id='.$d_sale["id_nodin"].'');
+            redirect('pengajuan_bpp.php?id='.$d_sale["id_nodin"].'');
           }
   }
 ?>

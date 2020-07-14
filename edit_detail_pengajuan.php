@@ -77,7 +77,7 @@
                   Akun</span>
                   <select class="form-control" name="id_akun">
                       <option value="">Pilih Jenis Pengajuan</option>
-                      <?php $jenis = find_all('akun');?>
+                      <?php $user=find_by_id('users',$_SESSION['user_id']); $jenis = find_all_global('akun',$user['id_satker'],'id_satker');?>
                     <?php  foreach ($jenis as $j): ?>
                       <option value="<?php echo (int)$j['id'] ?>">
                         <?php echo $j['keterangan'] ?>-<?php echo $j['mak'] ?></option>

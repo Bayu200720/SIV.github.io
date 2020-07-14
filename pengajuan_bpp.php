@@ -34,7 +34,8 @@ $idi= $_GET['id'];
                 <th class="text-center" style="width: 50px;">#</th>
                 <th> SPM </th>
                 <th class="text-center" style="width: 15%;"> Status Verifikasi </th> 
-                <th class="text-center" style="width: 15%;"> Status SPM </th>              
+                <th class="text-center" style="width: 15%;"> Status SPM </th>
+                <th>Berkas SPM</th>              
                 <th class="text-center" style="width: 15%;"> Status KPPN </th> 
                 <th class="text-center" style="width: 15%;"> Status SP2D </th>
                 <th class="text-center" style="width: 15%;"> Jenis Pengajuan</th>
@@ -49,14 +50,38 @@ $idi= $_GET['id'];
                <td><?php echo remove_junk($sale['SPM']); ?></td>
                <td class="text-center"><?php if($sale['status_verifikasi']==0){?><span class="label label-danger">Belom di Proses</span><?php }else{?>
              <span class="label label-success">Sudah di Proses oleh <?php $user = find_by_id('users',(int)$sale['status_verifikasi']);echo $user['name'];?></span><?php } ?>
+            <?php $verif = find_all_global('verifikasi',$sale['id'],'id_pengajuan');if($verif[0]['id_pengajuan']!=NULL){?>
+               <a href="<?php 
+                  if($sale['id_jenis_pengajuan']==1){
+                    echo "verif_LSsppd.php?id=".$sale['id_nodin']."&v=".$sale['id'];
+                  }else if($sale['id_jenis_pengajuan']==2){
+                    echo "verif_sppdLn.php?id=".$sale['id_nodin']."&v=".$sale['id'];
+                  }else if($sale['id_jenis_pengajuan']==3){
+                    echo "verif_LSHonor.php?id=".$sale['id_nodin']."&v=".$sale['id'];
+                  }else if($sale['id_jenis_pengajuan']==4){
+                    echo "verif_LSjasprof.php?id=".$sale['id_nodin']."&v=".$sale['id'];
+                  }else if($sale['id_jenis_pengajuan']==5){
+                    echo "verif_LSkur50.php?id=".$sale['id_nodin']."&v=".$sale['id'];
+                  }else{
+                    echo "verif_GU.php?id=".$sale['id_nodin']."&v=".$sale['id'];
+            
+                  }
+                
+                ?>" class="btn btn-warning">Kekurangan</a>
+            <?php } ?>
             </td>
             
             <td class="text-center"><?php if($sale['status_spm']==0){?><span class="label label-danger">Belom di Proses</span><?php }else{?>
              <span class="label label-success">Sudah di Proses oleh <?php $user = find_by_id('users',(int)$sale['status_spm']);echo $user['name'];?></span><?php } ?>
             </td>
+            <td><?php if($sale['file_spm']!=''){?><a href="uploads/spm/<?=$sale['file_spm']?>" class="btn btn-success" target="_blank">Preview</a><?php } ?></td>
 
-            <td class="text-center"><?php if($sale['status_kppn']==0){?><span class="label label-danger">Belom di Proses</span><?php }else{?>
-             <span class="label label-success">Sudah di Proses oleh <?php $user = find_by_id('users',(int)$sale['status_kppn']);echo $user['name'];?></span><?php } ?>
+            <td class="text-center">
+            <?php if($sale['penolakan_kppn']!=''){?><span class="label label-danger">Penolakan KPPN perbaiakan= <?=$sale['penolakan_kppn'];?></span><?php }else{ ?>
+               
+               <?php } ?>
+               <?php if($sale['status_kppn']==0){?><span class="label label-danger">Belom di Proses</span><?php }else{?>
+                <span class="label label-success">Sudah di Proses oleh <?php $user = find_by_id('users',(int)$sale['status_kppn']);echo $user['name'];?></span><?php } ?>
             </td>
 
             <td class="text-center"><?php if($sale['status_sp2d']==0){?><span class="label label-danger">Belom Cair</span><?php }else{?>
