@@ -52,7 +52,7 @@ class  Media {
       $h= explode(".",$_FILES['file_upload']['name']);
       date_default_timezone_set('Asia/Jakarta');
       $waktu= date('d-m-Y-His');
-      $nama = $h[0]."-".$spm."-".$waktu.".".$h[1];
+      $nama = $spm."-".$waktu."-".$h[0].".".$h[1];
       $this->fileName = $nama;  
       $this->fileType  = $this->imageInfo['mime'];
       $this->fileTempPath = $file['tmp_name'];

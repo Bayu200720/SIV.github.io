@@ -83,7 +83,7 @@ $sales = find_all('pengajuan');
              <a href="batal_sp2d.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a><?php } ?>
             <?php } ?>
             </td>
-            <td class="text-center"><?php if($sale['upload']==''){?><a href="media.php?id=<?=$sale['id']?>" class="btn btn-primary">Upload</a><?php }else{?>
+            <td class="text-center"><?php if($sale['upload']==''){?><?php }else{?>
              <a href="uploads/products/<?=$sale['upload']?>" class="btn btn-success" target="_blank">Preview</a>
               <?php if($user['user_level'] != 2 and $user['user_level'] != 3 and $user['user_level'] != 4 and $user['user_level'] != 5 and $user['user_level'] != 7){?>      
              <a href="batal_upload.php?id=<?=$sale['id']?>" class="btn btn-danger">Batal</a>

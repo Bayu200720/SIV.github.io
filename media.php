@@ -12,6 +12,16 @@
   if(isset($_POST['submit'])) {
      $id = $_POST['id'];
      //var_dump($_FILES['file_upload']);
+
+    //  var_dump($_FILES['file_upload']["tmp_name"]);
+
+
+    //  if (move_uploaded_file($_FILES["file_upload"]["tmp_name"], 'uploads/'.$_FILES['file_upload']['name'])) {
+    //   echo "The file ". basename( $_FILES["file_upload"]["name"]). " has been uploaded.";exit();
+    // } else {
+    //   echo "<a href='up/' class='btn btn-primary'>Buka</a>";
+    //   echo "Sorry, there was an error uploading your file.";exit();
+    // }
        
   $photo = new Media();
   $photo->upload($_FILES['file_upload'],$pengajuan['SPM']);
